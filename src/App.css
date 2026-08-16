@@ -1,0 +1,135 @@
+/* =========================================
+   CYBER JOURNEY GLOBAL BACKGROUND
+   ========================================= */
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Main application background */
+
+.app-background {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #0a0508;
+}
+
+/* =========================================
+   LIVE VIDEO
+   ========================================= */
+
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  object-fit: cover;
+
+  z-index: 0;
+
+  pointer-events: none;
+}
+
+/* =========================================
+   VIDEO OVERLAY
+   =========================================
+
+   IMPORTANT:
+
+   Do NOT use:
+
+   background: black;
+
+   or:
+
+   background: rgba(0,0,0,0.8);
+
+   because that will hide your video.
+
+   0.20 = 20% black
+*/
+
+.background-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 1;
+
+  background: rgba(18, 8, 14, 0.15);
+
+  pointer-events: none;
+}
+
+/* =========================================
+   GLASS CARDS
+   ========================================= */
+
+.glass-card {
+  background: rgba(26, 12, 20, 0.40);
+
+  border: 1px solid rgba(255, 190, 210, 0.16);
+
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 210, 220, 0.07);
+
+  color: white;
+}
+
+/* =========================================
+   GLASS SIDEBAR
+   ========================================= */
+
+.glass-sidebar {
+  background: rgba(25, 10, 18, 0.42);
+
+  border-right: 1px solid rgba(255, 190, 210, 0.14);
+
+  box-shadow:
+    10px 0 40px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================
+   INPUTS
+   ========================================= */
+
+input,
+textarea,
+select {
+  color: white;
+}
+
+/* =========================================
+   SCROLLBAR
+   ========================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(244, 114, 182, 0.45);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(244, 114, 182, 0.7);
+}
