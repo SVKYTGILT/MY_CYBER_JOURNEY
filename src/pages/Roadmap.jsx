@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { supabase, getCurrentUser } from '../lib/supabaseClient';
 import QuizModal from '../components/QuizModal';
 import {
   getTestByPhaseId,
@@ -46,12 +46,8 @@ export default function Roadmap() {
 
   const loadBestScoresFromDb = async () => {
     try {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
+      const user = await getCurrentUser();
 
-      if (userError) throw userError;
       if (!user) return;
 
       const dbScores = await loadTestScoresFromDb(user.id);
@@ -78,14 +74,7 @@ export default function Roadmap() {
     setError('');
 
     try {
-      const {
-        data: { user },
-        error: userError
-      } = await supabase.auth.getUser();
-
-      if (userError) {
-        throw userError;
-      }
+      const user = await getCurrentUser();
 
       if (!user) {
         setError('You are not logged in.');
@@ -211,14 +200,7 @@ export default function Roadmap() {
       setSaving(true);
       setError('');
 
-      const {
-        data: { user },
-        error: userError
-      } = await supabase.auth.getUser();
-
-      if (userError) {
-        throw userError;
-      }
+      const user = await getCurrentUser();
 
       if (!user) {
         throw new Error('You must be logged in.');
@@ -299,14 +281,7 @@ export default function Roadmap() {
       setSaving(true);
       setError('');
 
-      const {
-        data: { user },
-        error: userError
-      } = await supabase.auth.getUser();
-
-      if (userError) {
-        throw userError;
-      }
+      const user = await getCurrentUser();
 
       if (!user) {
         throw new Error('You must be logged in.');
@@ -390,9 +365,7 @@ export default function Roadmap() {
     setBestScores(next);
 
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const user = await getCurrentUser();
 
       if (user) {
         await saveBestScoreToDb(user.id, phaseId, score, total);

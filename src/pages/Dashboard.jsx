@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { supabase, getCurrentUser } from '../lib/supabaseClient';
 import {
   getXp,
   addXp,
@@ -45,12 +45,7 @@ export default function Dashboard() {
     setError('');
 
     try {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
-      if (userError) throw userError;
+      const user = await getCurrentUser();
 
       if (!user) {
         setError('You are not logged in.');
@@ -231,9 +226,7 @@ export default function Dashboard() {
     setError('');
 
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const user = await getCurrentUser();
 
       if (!user) throw new Error('You must be logged in.');
 
@@ -289,12 +282,7 @@ export default function Dashboard() {
     setError('');
 
     try {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
-      if (userError) throw userError;
+      const user = await getCurrentUser();
 
       if (!user) {
         throw new Error('You must be logged in.');
@@ -326,9 +314,7 @@ export default function Dashboard() {
 
       // Award XP for the study day
       try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
+        const user = await getCurrentUser();
 
         if (user) {
           const newXp = await addXp(user.id, XP_AWARDS.STUDY_DAY);

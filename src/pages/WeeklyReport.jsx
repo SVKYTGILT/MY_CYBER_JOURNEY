@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { jsPDF } from 'jspdf';
-import { supabase } from '../lib/supabaseClient';
+import { supabase, getCurrentUser } from '../lib/supabaseClient';
 import { addXp } from '../utils/xp';
 import {
   getStartOfWeekIso,
@@ -40,12 +40,7 @@ export default function WeeklyReport() {
     setError('');
 
     try {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
-      if (userError) throw userError;
+      const user = await getCurrentUser();
 
       if (!user) {
         setError('You are not logged in.');
@@ -76,12 +71,8 @@ export default function WeeklyReport() {
 
   const loadChallenges = async () => {
     try {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
+      const user = await getCurrentUser();
 
-      if (userError) throw userError;
       if (!user) return;
 
       const { data: challengeData, error: challengeError } =
@@ -169,9 +160,7 @@ export default function WeeklyReport() {
       setError('');
       setClaimLoading(challenge.id);
 
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const user = await getCurrentUser();
 
       if (!user) throw new Error('You must be logged in.');
 
@@ -235,12 +224,7 @@ export default function WeeklyReport() {
     setError('');
 
     try {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
-      if (userError) throw userError;
+      const user = await getCurrentUser();
 
       if (!user) {
         setError('You must be logged in to create a report.');

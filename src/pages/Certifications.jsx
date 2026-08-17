@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { jsPDF } from 'jspdf';
-import { supabase } from '../lib/supabaseClient';
+import { supabase, getCurrentUser } from '../lib/supabaseClient';
 
 export default function Certifications() {
   const [certifications, setCertifications] = useState([]);
@@ -26,12 +26,7 @@ export default function Certifications() {
     setError('');
 
     try {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
-      if (userError) throw userError;
+      const user = await getCurrentUser();
 
       if (!user) {
         setError('You are not logged in.');
@@ -116,12 +111,7 @@ export default function Certifications() {
     setError('');
 
     try {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
-      if (userError) throw userError;
+      const user = await getCurrentUser();
 
       if (!user) {
         setError('You must be logged in to add a certification.');

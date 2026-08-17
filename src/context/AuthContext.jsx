@@ -5,7 +5,7 @@ import React, {
   useState
 } from 'react';
 
-import { supabase } from '../lib/supabaseClient';
+import { supabase, getCurrentUser } from '../lib/supabaseClient';
 
 const AuthContext = createContext(null);
 
@@ -17,12 +17,16 @@ export function AuthProvider({ children }) {
     let mounted = true;
 
     const loadUser = async () => {
-      const {
-        data: { user }
-      } = await supabase.auth.getUser();
+      let currentUser = null;
+
+      try {
+        currentUser = await getCurrentUser();
+      } catch (error) {
+        console.error('Error loading session:', error);
+      }
 
       if (mounted) {
-        setUser(user ?? null);
+        setUser(currentUser);
         setLoading(false);
       }
     };

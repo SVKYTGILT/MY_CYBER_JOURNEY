@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { supabase, getCurrentUser } from '../lib/supabaseClient';
 
 export default function AIMentor() {
   // API Key state (saved in localStorage so you only enter it once)
@@ -39,12 +39,8 @@ export default function AIMentor() {
 
   const loadChatHistory = async () => {
     try {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
+      const user = await getCurrentUser();
 
-      if (userError) throw userError;
       if (!user) return;
 
       const { data, error } = await supabase
@@ -66,9 +62,7 @@ export default function AIMentor() {
 
   const saveMessagesToDb = async (messagesToSave) => {
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const user = await getCurrentUser();
 
       if (!user) return;
 

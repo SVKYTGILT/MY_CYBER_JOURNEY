@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { supabase, getCurrentUser } from '../lib/supabaseClient';
 
 export default function Notes() {
   const [notes, setNotes] = useState([]);
@@ -23,12 +23,7 @@ export default function Notes() {
     setError('');
 
     try {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
-      if (userError) throw userError;
+      const user = await getCurrentUser();
 
       if (!user) {
         setError('You are not logged in.');
@@ -66,12 +61,7 @@ export default function Notes() {
     setError('');
 
     try {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
-      if (userError) throw userError;
+      const user = await getCurrentUser();
 
       if (!user) {
         setError('You must be logged in to create a note.');
